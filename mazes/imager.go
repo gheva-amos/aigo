@@ -1,6 +1,7 @@
 package maze
 
 import (
+	"fmt"
 	"image"
 	"image/color"
 	"image/draw"
@@ -39,7 +40,11 @@ func (m *Maze) ToImage(solution *Solution, path string) {
 			m.draw_rect(row, col, cell_size, canvas, color)
 		}
 	}
-	f, _ := os.Create(path)
+	f, err := os.Create(path)
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
 	defer f.Close()
 	png.Encode(f, canvas)
 }
