@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.comr/gheva-amos/aigo/mazes"
 	"flag"
 	"fmt"
+	"github.com/gheva-amos/aigo/mazes"
 	"os"
 )
 
