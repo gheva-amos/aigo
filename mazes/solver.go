@@ -4,7 +4,10 @@ import (
 	"fmt"
 )
 
-type PathFollower func(*Maze, Point)
+type PathFollower interface {
+	Step(*Maze, Point)
+	Done(*Maze, *Solution)
+}
 
 type Solver struct {
 	maze       *Maze
@@ -31,7 +34,15 @@ func (s *Solver) Step(point Point) {
 	s.did_visit[point] = true
 	fmt.Printf("(%d, %d)\n", point.Row, point.Col)
 	for _, f := range s.followers {
-		f(s.maze, point)
+		f.Step(s.maze, point)
+	}
+}
+
+func (s *Solver) Solved(solution *Solution) {
+	if solution != nil {
+		for _, f := range s.followers {
+			f.Done(s.maze, solution)
+		}
 	}
 }
 
