@@ -44,6 +44,7 @@ func (dfs *DepthFirstSearch) Solve() error {
 				node = dfs.Parents[node]
 			}
 			fmt.Printf("---\n%s\n", dfs.solution)
+			dfs.Solved(dfs.solution)
 			return nil
 		}
 		dfs.current = node
