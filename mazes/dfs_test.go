@@ -40,5 +40,5 @@ A######`
 	m.FromString(str)
 	dfs := maze.NewDFS(&m)
 	dfs.Solve()
-	m.ToImage(dfs.Solution(), "out.png")
+	//m.ToImage(dfs.Solution(), "out.png")
 }
