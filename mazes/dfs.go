@@ -5,21 +5,24 @@ import (
 )
 
 type DepthFirstSearch struct {
-	maze     *Maze
+	Solver
 	Frontier []Point
 	Parents  map[*Node]*Node
-	visited  []Point
 	current  *Node
-	solution *Solution
 }
 
 func NewDFS(maze *Maze) DepthFirstSearch {
-	return DepthFirstSearch{maze: maze, current: nil, Parents: make(map[*Node]*Node), solution: &Solution{}}
+	return DepthFirstSearch{Solver: Solver{
+		maze:      maze,
+		solution:  &Solution{},
+		did_visit: make(map[Point]bool),
+	},
+		current: nil, Parents: make(map[*Node]*Node)}
 }
 
 func (dfs *DepthFirstSearch) Solve() error {
-	dfs.Frontier = append(dfs.Frontier, dfs.maze.Start)
-	dfs.Parents[&dfs.maze.Board[dfs.maze.Start.Row][dfs.maze.Start.Col]] = dfs.current
+	dfs.Frontier = append(dfs.Frontier, dfs.Start())
+	dfs.Parents[&dfs.Maze().Board[dfs.Start().Row][dfs.Start().Col]] = dfs.current
 
 	for {
 		if len(dfs.Frontier) == 0 {
@@ -44,11 +47,11 @@ func (dfs *DepthFirstSearch) Solve() error {
 			return nil
 		}
 		dfs.current = node
-		dfs.visited = append(dfs.visited, node.Coords)
-		neighbours := node.Neighbours(dfs.maze)
+		dfs.Step(node.Coords)
+		neighbours := node.Neighbours(dfs.Maze())
 		for _, n := range neighbours {
-			as_node := &dfs.maze.Board[n.Row][n.Col]
-			if !dfs.did_visit(as_node) {
+			as_node := &dfs.Maze().Board[n.Row][n.Col]
+			if !dfs.DidVisit(n) {
 				if !dfs.in_frontier(as_node) {
 					dfs.Frontier = append(dfs.Frontier, n)
 					dfs.Parents[as_node] = dfs.current
@@ -68,34 +71,13 @@ func (dfs *DepthFirstSearch) in_frontier(node *Node) bool {
 	return false
 }
 
-func (dfs *DepthFirstSearch) did_visit(node *Node) bool {
-	for _, n := range dfs.visited {
-		if node.Coords.Equals(n) {
-			return true
-		}
-	}
-	return false
-}
-
 func (dfs *DepthFirstSearch) PopNode() (*Node, error) {
 	if len(dfs.Frontier) == 0 {
 		return nil, fmt.Errorf("Trying to get a node from an empty frontier")
 	}
 	p := dfs.Frontier[len(dfs.Frontier)-1]
-	ret := &dfs.maze.Board[p.Row][p.Col]
+	ret := &dfs.Maze().Board[p.Row][p.Col]
 	dfs.Frontier = dfs.Frontier[:len(dfs.Frontier)-1]
 
 	return ret, nil
-}
-
-func (dfs *DepthFirstSearch) Start() Point {
-	return dfs.maze.Start
-}
-
-func (dfs *DepthFirstSearch) End() Point {
-	return dfs.maze.End
-}
-
-func (dfs *DepthFirstSearch) Solution() *Solution {
-	return dfs.solution
 }
