@@ -37,7 +37,7 @@ func (m *Maze) ToImage(solution *Solution, path string) {
 			if cell.Coords.Equals(m.End) {
 				color = end
 			}
-			m.draw_rect(row, col, cell_size, canvas, color)
+			m.draw_rect(col, row, cell_size, canvas, color)
 		}
 	}
 	f, err := os.Create(path)

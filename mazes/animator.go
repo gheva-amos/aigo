@@ -74,7 +74,7 @@ func (a *Animator) add_frame(maze *Maze) {
 			if cell.Coords.Equals(a.current) {
 				color = Current
 			}
-			fill_rect(img, row*a.cell_size, col*a.cell_size, a.cell_size, a.cell_size, color)
+			fill_rect(img, col*a.cell_size, row*a.cell_size, a.cell_size, a.cell_size, color)
 		}
 	}
 	a.frames = append(a.frames, img)
