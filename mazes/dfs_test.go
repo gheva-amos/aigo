@@ -1,7 +1,7 @@
 package maze_test
 
 import (
-	"github.comr/gheva-amos/aigo/mazes"
+	"github.com/gheva-amos/aigo/mazes"
 	"testing"
 )
 
