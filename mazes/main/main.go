@@ -20,7 +20,10 @@ func main() {
 		fmt.Println(err)
 		os.Exit(1)
 	}
+	a := maze.NewAnimator()
 	dfs := maze.NewDFS(&m)
+	dfs.RegisterFollower(a)
 	dfs.Solve()
-	m.ToImage(dfs.Solution(), *save_to)
+	a.Save(*save_to)
+	//m.ToImage(dfs.Solution(), *save_to)
 }
