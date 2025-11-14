@@ -74,7 +74,7 @@ func (n *Node) Neighbours(m *Maze) []Point {
 
 	var ret []Point
 	for _, p := range candidates {
-		if p.Row >= 0 && p.Row < m.Height()-1 && p.Col >= 0 && p.Col < m.Width()-1 {
+		if p.Row >= 0 && p.Row < m.Height() && p.Col >= 0 && p.Col < m.Width() {
 			if !m.Board[p.Row][p.Col].IsWall {
 				ret = append(ret, p)
 			}
