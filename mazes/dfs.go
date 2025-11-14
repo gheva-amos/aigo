@@ -51,7 +51,7 @@ func (dfs *DepthFirstSearch) Solve() error {
 		dfs.Step(node.Coords)
 		neighbours := node.Neighbours(dfs.Maze())
 		for _, n := range neighbours {
-			as_node := &dfs.Maze().Board[n.Row][n.Col]
+			as_node := dfs.At(n.Row, n.Col)
 			if !dfs.DidVisit(n) {
 				if !dfs.in_frontier(n) {
 					dfs.Frontier = append(dfs.Frontier, n)
@@ -77,7 +77,7 @@ func (dfs *DepthFirstSearch) PopNode() (*Node, error) {
 		return nil, fmt.Errorf("Trying to get a node from an empty frontier")
 	}
 	p := dfs.Frontier[len(dfs.Frontier)-1]
-	ret := &dfs.Maze().Board[p.Row][p.Col]
+	ret := dfs.At(p.Row, p.Col)
 	dfs.Frontier = dfs.Frontier[:len(dfs.Frontier)-1]
 
 	return ret, nil
