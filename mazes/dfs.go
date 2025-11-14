@@ -52,7 +52,7 @@ func (dfs *DepthFirstSearch) Solve() error {
 		for _, n := range neighbours {
 			as_node := &dfs.Maze().Board[n.Row][n.Col]
 			if !dfs.DidVisit(n) {
-				if !dfs.in_frontier(as_node) {
+				if !dfs.in_frontier(n) {
 					dfs.Frontier = append(dfs.Frontier, n)
 					dfs.Parents[as_node] = dfs.current
 				}
@@ -62,9 +62,9 @@ func (dfs *DepthFirstSearch) Solve() error {
 	return nil
 }
 
-func (dfs *DepthFirstSearch) in_frontier(node *Node) bool {
+func (dfs *DepthFirstSearch) in_frontier(point Point) bool {
 	for _, n := range dfs.Frontier {
-		if node.Coords.Equals(n) {
+		if point.Equals(n) {
 			return true
 		}
 	}
