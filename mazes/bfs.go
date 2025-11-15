@@ -34,7 +34,6 @@ func (bfs *BreadthFistSearch) Solve() error {
 			return err
 		}
 		if node.Coords.Equals(bfs.End()) {
-			bfs.Parents[node] = bfs.current
 			fmt.Println("solved")
 			for {
 				if node == nil {

@@ -34,7 +34,6 @@ func (dfs *DepthFirstSearch) Solve() error {
 			return err
 		}
 		if node.Coords.Equals(dfs.End()) {
-			dfs.Parents[node] = dfs.current
 			fmt.Println("solved")
 			for {
 				if node == nil {
