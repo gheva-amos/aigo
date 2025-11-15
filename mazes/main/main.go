@@ -29,7 +29,7 @@ func main() {
 		dfs.RegisterFollower(a)
 		dfs.Solve()
 	} else if *algorithm == "bfs" {
-		bfs := maze.NewDFS(&m)
+		bfs := maze.NewBFS(&m)
 		bfs.RegisterFollower(a)
 		bfs.Solve()
 	}
