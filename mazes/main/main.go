@@ -32,6 +32,10 @@ func main() {
 		bfs := maze.NewBFS(&m)
 		bfs.RegisterFollower(a)
 		bfs.Solve()
+	} else if *algorithm == "djik" {
+		bfs := maze.NewDijkstra(&m)
+		bfs.RegisterFollower(a)
+		bfs.Solve()
 	}
 	if save_to != nil {
 		a.Save(*save_to)
